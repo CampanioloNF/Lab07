@@ -13,24 +13,29 @@ import com.zaxxer.hikari.HikariDataSource;
  */
 public class ConnectDB {
 
-	private static final String jdbcURL = "jdbc:mysql://localhost/poweroutages";
-	private static HikariDataSource ds;
+	private static final String jdbcURL = "jdbc:mysql://localhost/poweroutages?serverTimezone=Europe/Rome";
+	private static HikariDataSource ds = null;
 
 	public static Connection getConnection() {
 
+	
+		
 		if (ds == null) {
 			
 			ds = new HikariDataSource();
 
 			ds.setJdbcUrl(jdbcURL);
 			ds.setUsername("root");
-			ds.setPassword("root");
+			ds.setPassword("corbezzoli95");
 
 			// configurazione MySQL
 			ds.addDataSourceProperty("cachePrepStmts", "true");
 			ds.addDataSourceProperty("prepStmtCacheSize", "250");
 			ds.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+			
 
+			
+			
 		}
 
 		try {
@@ -39,8 +44,10 @@ public class ConnectDB {
 
 		} catch (SQLException e) {
 			System.err.println("Errore connessione al DB");
-			throw new RuntimeException(e);
+			//throw new RuntimeException(e);
+			
 		}
+		return null;
 	}
 
 }

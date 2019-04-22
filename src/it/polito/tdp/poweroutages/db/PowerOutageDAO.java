@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import it.polito.tdp.poweroutages.model.Nerc;
+import it.polito.tdp.poweroutages.model.PowerOutages;
 
 public class PowerOutageDAO {
 
@@ -24,6 +24,38 @@ public class PowerOutageDAO {
 			while (res.next()) {
 				Nerc n = new Nerc(res.getInt("id"), res.getString("value"));
 				nercList.add(n);
+			}
+
+			conn.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+		return nercList;
+	}
+
+	public List<PowerOutages> getBlackoutsIntervallo(Nerc nerc, int i, int j) {
+	
+		String sql = "SELECT id, customers_affected, date_event_began, date_event_finished, demand_loss " + 
+				"FROM poweroutages p " + 
+				"WHERE YEAR(p.date_event_began)>= ? AND YEAR(p.date_event_began)<= ? AND p.nerc_id= ?";
+		List<PowerOutages> nercList = new ArrayList<PowerOutages>();
+
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			
+			st.setInt(1, i);
+			st.setInt(2, j);
+			st.setInt(3, nerc.getId());
+			
+			ResultSet res = st.executeQuery();
+
+			while (res.next()) {
+				PowerOutages po = new PowerOutages(res.getInt("id"), res.getInt("customers_affected"), 
+						(res.getTimestamp("date_event_began")).toLocalDateTime(),  (res.getTimestamp("date_event_finished")).toLocalDateTime(), nerc, res.getInt("demand_loss"));
+				nercList.add(po);
 			}
 
 			conn.close();
