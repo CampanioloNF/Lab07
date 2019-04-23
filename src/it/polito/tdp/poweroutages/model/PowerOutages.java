@@ -122,6 +122,8 @@ public class PowerOutages implements Comparable<PowerOutages>{
 	}
 	
 	public String toString() {
-		return ""+" -- Began: "+this.dateEventBegan+" -- Finished: "+this.dateEventFinished+" -- Hours: "+this.getOre()+" -- Custumers affected: "+this.custumersAffected;
+		//return ""+" -- Began: "+this.dateEventBegan+" -- Finished: "+this.dateEventFinished+" -- Hours: "+this.getOre()+" -- Custumers affected: "+this.custumersAffected;
+	 return String.format("Began:  %s ; Finished:  %s ; Hours:  %3d ; Custumers affected: %7d ",
+    		  dateEventBegan,dateEventFinished,getOre(),custumersAffected );
 	}
 }

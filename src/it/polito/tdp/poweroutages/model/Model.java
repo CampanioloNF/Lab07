@@ -132,7 +132,6 @@ public class Model {
 		cerca(parziale, L+1,ore, blackoutsIntervallo);
 		
 		//provo ad aggiungerlo
-		
 		parziale.add(blackoutsIntervallo.get(L));
 		
 		cerca(parziale, L+1,ore,blackoutsIntervallo);
