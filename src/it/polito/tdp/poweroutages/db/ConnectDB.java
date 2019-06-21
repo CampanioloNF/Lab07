@@ -26,7 +26,7 @@ public class ConnectDB {
 
 			ds.setJdbcUrl(jdbcURL);
 			ds.setUsername("root");
-			ds.setPassword("corbezzoli95");
+			ds.setPassword("");
 
 			// configurazione MySQL
 			ds.addDataSourceProperty("cachePrepStmts", "true");
